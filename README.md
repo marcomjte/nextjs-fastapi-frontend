@@ -1,6 +1,6 @@
-# Mi App — Full Stack con Next.js 15 + FastAPI + MySQL
+# nextjs-fastapi-starter
 
-Sistema web full stack con autenticación segura, arquitectura SSR-first en el frontend y API REST en Python.
+Sistema web full stack con autenticación segura y arquitectura SSR-first en el frontend.
 
 ---
 
@@ -16,66 +16,44 @@ Sistema web full stack con autenticación segura, arquitectura SSR-first en el f
 | Tailwind CSS | v4 | Estilos |
 
 ### Backend
-| Tecnología | Versión | Uso |
-|---|---|---|
-| Python | 3.11+ | Lenguaje base |
-| FastAPI | latest | Framework API REST |
-| SQLAlchemy | latest | ORM |
-| PyMySQL | latest | Conector MySQL |
-| Passlib + bcrypt | latest | Hash de contraseñas |
-| Python-Jose | latest | Generación de JWT |
-
-### Base de datos
-| Tecnología | Uso |
-|---|---|
-| MySQL 8+ | Base de datos principal |
+El backend de este proyecto es una API REST desarrollada en FastAPI + MySQL.
+Repositorio: `https://github.com/tu-usuario/nombre-del-repo-backend`
 
 ---
 
 ## Estructura del proyecto
 
 ```
-/
-├── frontend/                        # Aplicación Next.js 15
-│   ├── app/
-│   │   ├── (auth)/                  # Rutas públicas de autenticación
-│   │   │   └── login/
-│   │   │       ├── page.tsx         # Server Component
-│   │   │       └── LoginForm.tsx    # Client Component (mínimo)
-│   │   ├── (app)/                   # Rutas privadas de la aplicación
-│   │   │   ├── layout.tsx           # Layout protegido (verifica sesión)
-│   │   │   ├── _components/         # Componentes compartidos (no son rutas)
-│   │   │   │   ├── Navbar.tsx       # Server Component
-│   │   │   │   └── LogoutButton.tsx # Client Component
-│   │   │   └── dashboard/
-│   │   │       └── page.tsx         # Server Component con fetch SSR
-│   │   ├── actions/
-│   │   │   └── auth.ts              # Server Actions (login, logout)
-│   │   ├── api/
-│   │   │   └── auth/
-│   │   │       └── [...nextauth]/
-│   │   │           └── route.ts     # Route handler de NextAuth
-│   │   └── page.tsx                 # Landing page
-│   ├── lib/
-│   │   └── api.ts                   # Cliente HTTP para llamadas SSR al backend
-│   ├── types/
-│   │   ├── api.ts                   # Tipos del dominio (User, AuthResponse, etc.)
-│   │   ├── next-auth.d.ts           # Extensión de tipos de sesión
-│   │   └── index.ts                 # Re-exportaciones
-│   ├── auth.ts                      # Configuración completa de NextAuth
-│   ├── auth.config.ts               # Config base Edge-compatible (para proxy)
-│   ├── proxy.ts                     # Protección de rutas (Edge Runtime)
-│   └── .env.local                   # Variables de entorno (no subir a git)
-│
-└── backend/                         # API en FastAPI (próximamente)
-    ├── routers/
-    │   └── auth.py                  # Endpoints de autenticación
-    ├── models/
-    │   └── user.py                  # Modelo SQLAlchemy
-    ├── database.py                  # Conexión MySQL
-    ├── main.py                      # Entrada de la aplicación
-    ├── requirements.txt
-    └── .env                         # Variables de entorno (no subir a git)
+frontend/
+├── app/
+│   ├── (auth)/                  # Rutas públicas de autenticación
+│   │   └── login/
+│   │       ├── page.tsx         # Server Component
+│   │       └── LoginForm.tsx    # Client Component (mínimo)
+│   ├── (app)/                   # Rutas privadas de la aplicación
+│   │   ├── layout.tsx           # Layout protegido (verifica sesión)
+│   │   ├── _components/         # Componentes compartidos (no son rutas)
+│   │   │   ├── Navbar.tsx       # Server Component
+│   │   │   └── LogoutButton.tsx # Client Component
+│   │   └── dashboard/
+│   │       └── page.tsx         # Server Component con fetch SSR
+│   ├── actions/
+│   │   └── auth.ts              # Server Actions (login, logout)
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...nextauth]/
+│   │           └── route.ts     # Route handler de NextAuth
+│   └── page.tsx                 # Landing page
+├── lib/
+│   └── api.ts                   # Cliente HTTP para llamadas SSR al backend
+├── types/
+│   ├── api.ts                   # Tipos del dominio (User, AuthResponse, etc.)
+│   ├── next-auth.d.ts           # Extensión de tipos de sesión
+│   └── index.ts                 # Re-exportaciones
+├── auth.ts                      # Configuración completa de NextAuth
+├── auth.config.ts               # Config base Edge-compatible (para proxy)
+├── proxy.ts                     # Protección de rutas (Edge Runtime)
+└── .env.local                   # Variables de entorno (no subir a git)
 ```
 
 ---
@@ -125,17 +103,12 @@ El frontend está diseñado para maximizar el rendering en servidor (SSR), minim
 
 ## Variables de entorno
 
-### Frontend — `frontend/.env.local`
+Creá un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
+
 ```bash
 NEXTAUTH_SECRET=     # Generá con: openssl rand -base64 32
 NEXTAUTH_URL=        # http://localhost:3000 en desarrollo
 API_URL=             # http://localhost:8000 en desarrollo
-```
-
-### Backend — `backend/.env`
-```bash
-DATABASE_URL=        # mysql+pymysql://user:password@localhost:3306/dbname
-JWT_SECRET=          # Mismo valor que NEXTAUTH_SECRET
 ```
 
 ---
@@ -144,23 +117,12 @@ JWT_SECRET=          # Mismo valor que NEXTAUTH_SECRET
 
 ### Requisitos
 - Node.js 20+
-- Python 3.11+
-- MySQL 8+
 
-### Frontend
+### Pasos
 ```bash
-cd frontend
 npm install
 npm run dev
 # → http://localhost:3000
-```
-
-### Backend
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-# → http://localhost:8000
 ```
 
 ---
@@ -175,29 +137,6 @@ uvicorn main:app --reload
 
 ---
 
-## .gitignore recomendado
+## Licencia
 
-```
-# Entornos
-.env
-.env.local
-.env*.local
-
-# Next.js
-frontend/.next/
-frontend/node_modules/
-
-# Python
-backend/__pycache__/
-backend/*.pyc
-backend/venv/
-```
-
----
-
-## Próximamente
-
-- [ ] Registro de usuarios
-- [ ] Rutas adicionales en `(app)`
-- [ ] Endpoints protegidos en FastAPI con verificación JWT
-- [ ] Modelos adicionales en MySQL
+MIT

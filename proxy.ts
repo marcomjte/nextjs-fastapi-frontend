@@ -1,9 +1,11 @@
 // proxy.ts
 import NextAuth from "next-auth";
-import { authConfig } from "@/auth.config";
+import { authConfig } from "./auth.config";
 
-export const { auth: proxy } = NextAuth(authConfig);
+const { auth } = NextAuth(authConfig);
+
+export default auth;  // ← default export
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/dashboard/:path*", "/login"],
 };

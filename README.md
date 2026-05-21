@@ -17,7 +17,7 @@ Sistema web full stack con autenticación segura y arquitectura SSR-first en el 
 
 ### Backend
 El backend de este proyecto es una API REST desarrollada en FastAPI + MySQL.
-Repositorio: `https://github.com/tu-usuario/nombre-del-repo-backend`
+Repositorio: `https://github.com/marcomjte/python-fastapi-backend`
 
 ---
 

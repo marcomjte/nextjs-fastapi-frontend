@@ -7,10 +7,7 @@ export default async function DashboardPage() {
   const session = await auth();
 
   // Fetch SSR con el token del usuario
-    const user = await getServerData<User>(
-    "/users/me",
-    (session as any).access_token
-  );
+  const user = await getServerData<User>("/auth/me", session?.access_token);
 
   return (
     <div className="space-y-6">

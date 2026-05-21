@@ -1,21 +1,20 @@
 // lib/api.ts
 const API_URL = process.env.API_URL!;
 
+// lib/api.ts
 export async function getServerData<T = unknown>(
   path: string,
   token?: string
-): Promise<T>{
+): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    next: { revalidate: 60 }, // ISR: revalida cada 60 segundos
+    next: { revalidate: 60 },
   });
 
-  if (!res.ok) {
-    throw new Error(`Error ${res.status} en ${path}`);
-  }
+  if (!res.ok) throw new Error(`Error ${res.status} en ${path}`);
   return res.json();
 }
 
